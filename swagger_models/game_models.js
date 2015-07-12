@@ -4,7 +4,7 @@
 module.exports = {
     "Game": {
         "id": "game",
-        "required": ["id_game, name"],
+        "required": ["id_game, name, description"],
         "properties": {
             "id_game": {
                 "type": "integer",
@@ -14,42 +14,33 @@ module.exports = {
             "name": {
                 "type": "string",
                 "description": "Name of the game"
+            },
+            "description": {
+                "type": "string",
+                "description": "Description of the game"
             }
         }
     },"GameCreation": {
         "id": "game",
-        "required": ["name"],
+        "required": ["name, description"],
         "properties": {
             "name": {
                 "type": "string",
                 "description": "Name of the game"
-            }
-        }
-    }, "GameNotification": {
-        "id": "game_notification",
-        "required": ["message, idGames"],
-        "properties": {
-            "message": {
-                "type": "NotificationMessage",
-                "description": "Mensaje a enviar en la notificación"
             },
-            "gameIds": {
-                "type": "array",
-                "description": "Ids de las aplicaciones a las que se va a notificar",
-                "items": {
-                    "type": "integer",
-                    "description": "ID de la aplicación en el sistema"
-                }
+            "description": {
+                "type": "string",
+                "description": "Description of the game"
             }
         }
     },"GameCreationResponse": {
         "id": "gameCreationResponse",
         "required": ["id_game"],
         "properties": {
-            "id_user": {
+            "id_game": {
                 "type": "integer",
                 "format": "int64",
-                "description": "ID único de la aplicación en el sistema de notificaciones"
+                "description": "Id of the game"
             }
         }
     }

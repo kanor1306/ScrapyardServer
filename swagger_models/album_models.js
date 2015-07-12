@@ -4,30 +4,20 @@
 module.exports = {
     "Album": {
         "id": "album",
-        "required": ["uuid, model, artist, id_album, id_user"],
+        "required": ["title, id_artist, id_album"],
         "properties": {
             "id_album": {
                 "type": "integer",
                 "format": "int64",
                 "description": "Album unique identifier in the system"
             },
-            "id_user": {
-                "type": "integer",
-                "format": "int64",
-                "description": "User unique identifier in the system"
-            },
-            "uuid": {
-                "type": "integer",
-                "format": "int64",
-                "description": "Universal album unique identifier"
-            },
-            "artist": {
+            "id_artist": {
                 "type": "string",
                 "description": "Artist of the album"
             },
-            "model": {
+            "title": {
                 "type": "string",
-                "description": "Model of the album"
+                "description": "Name of the album"
             }
         }
     },
@@ -40,16 +30,11 @@ module.exports = {
                 "format": "int64",
                 "description": "Album unique identifier in the system"
             },
-            "uuid": {
-                "type": "integer",
-                "format": "int64",
-                "description": "Universal album unique identifier"
-            },
             "artist": {
                 "type": "string",
                 "description": "Artist of the album"
             },
-            "model": {
+            "title": {
                 "type": "string",
                 "description": "Model of the album"
             },
@@ -118,41 +103,6 @@ module.exports = {
                 "type": "integer",
                 "format": "int64",
                 "description": "ID único del dispositivo en el sistema de notificaciones"
-            }
-        }
-    },"AlbumNotification": {
-        "id": "album_notification",
-        "required": ["message, idAlbums"],
-        "properties": {
-            "message": {
-                "type": "NotificationMessage",
-                "description": "Mensaje a enviar en la notificación"
-            },
-            "idAlbums": {
-                "type": "array",
-                "description": "Ids de los dispositivos a los que se va a notificar",
-                "items": {
-                    "type": "integer",
-                    "description": "ID del dispositivo en el sistema"
-                }
-            }
-        }
-    },"AlbumInfoNotification": {
-        "id": "album_info_notification",
-        "required": ["message, albumInfo"],
-        "properties": {
-            "message": {
-                "type": "NotificationMessage",
-                "description": "Mensaje a enviar en la notificación"
-            },
-            "albumInfo": {
-                "type": "array",
-                "description": "Información de los dispositivos a los que se va a notificar",
-                "items": {
-                    "items": {
-                        "$ref": "AlbumInfo"
-                    }
-                }
             }
         }
     }
