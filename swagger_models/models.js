@@ -3,12 +3,12 @@
  */
 
 var user_models = require("./user_models");
-var app_models = require("./app_models");
-var device_models = require("./device_models");
+var game_models = require("./game_models");
+var album_models = require("./album_models");
 
 
 exports.getModels = function(){
-    var modelsArray = [user_models, app_models, device_models];
+    var modelsArray = [user_models, album_models, game_models];
     var models={};
     for(c in modelsArray){
         var model = modelsArray[c];

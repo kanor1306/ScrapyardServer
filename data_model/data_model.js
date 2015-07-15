@@ -2,41 +2,37 @@ module.exports = function (Bookshelf) {
     var Person = Bookshelf.Model.extend({
         idAttribute: 'id_person',
         tableName : 'person',
-        albums: function () {
+        items: function () {
             return this.belongsToMany(Album).through(Album,"person_album", "id_person","id_album");
         }
     });
 
-    var Album = Bookshelf.Model.extend({
-        idAttribute: 'id_album',
-        tableName : 'album',
-        persons:function () {
-            return this.belongsToMany(Person).through(Person,"person_album", "id_album","id_person");
+    var Item = Bookshelf.Model.extend({
+        idAttribute: 'id_item',
+        tableName : 'item',
+        type : function(){
+            return this.hasOne(ItemType);
         },
-        artists:function(){
-            return this.belongsToMany(Artist).through(Artist,"artist_album", "id_album","id_artist");
+        itemClass : function(){
+            return this.hasOne(ItemClass);
+        },
+        persons:function () {
+            return this.belongsToMany(Person).through(Person,"item_person", "id_item","id_person");
+        },
+        songs:function(){
+            return this.belongsToMany(Artist).through(Artist,"item_songs", "id_item","id_song");
         },
         genres : function(){
-            return this.belongsToMany(Genre).through(Genre,"album_genre", "id_album","id_genre");
+            return this.belongsToMany(Genre).through(Genre,"item_genre", "id_item","id_genre");
         }
     });
 
-    var Game = Bookshelf.Model.extend({
-        idAttribute: 'id_game',
-        tableName : 'game',
-        songs : function(){
-            return this.belongsToMany(Song).through(Song, "game_song_person", "id_game","id_song");
-        },
-        genres : function(){
-            return this.belongsToMany(Genre).through(Genre,"game_genre", "id_game","id_genre");
-        }
-    });
 
     var Artist = Bookshelf.Model.extend({
         idAttribute: 'id_artist',
         tableName : 'artist',
-        albums :  function () {
-            return this.belongsToMany(Album).through(Album,"artist_album", "id_artist","id_album");
+        songs :  function () {
+            return this.belongsToMany(Song).through(Song,"artist_song", "id_artist","id_song");
         }
     });
 
@@ -49,19 +45,32 @@ module.exports = function (Bookshelf) {
     });
 
     var GenreType =Bookshelf.Model.extend({
-        idAttribute: 'id_genre_type',
+        idAttribute: 'id_type_genre',
         tableName : 'genre_type'
+    });
+
+
+    var ItemType =Bookshelf.Model.extend({
+        idAttribute: 'id_item_type',
+        tableName : 'item_type'
+    });
+
+
+    var ItemClass =Bookshelf.Model.extend({
+        idAttribute: 'id_item_class',
+        tableName : 'item_class'
     });
 
     var Song = Bookshelf.Model.extend({
         idAttribute: 'id_song',
         tableName : 'song',
-        albums : function(){
-            return this.belongsToMany(Album).through(Album,"album_song", "id_song","id_album");
+        item : function(){
+            return this.belongsToMany(Album).through(Album,"item_song", "id_song","id_item");
         },
         artist : function(){
-            return this.hasMany(Artist).through(Album);
+            return this.hasMany(Artist).through(Song, "artist_song", "id_song", "id_artist");
         }
+
     });
 
 
@@ -69,12 +78,8 @@ module.exports = function (Bookshelf) {
         model: Person
     });
 
-    var Albums = Bookshelf.Collection.extend({
-        model: Album
-    });
-
-    var Games = Bookshelf.Collection.extend({
-        model: Game
+    var Items = Bookshelf.Collection.extend({
+        model: Item
     });
 
     var Genres = Bookshelf.Collection.extend({
@@ -93,12 +98,21 @@ module.exports = function (Bookshelf) {
         model: GenreType
     });
 
+    var ItemTypes = Bookshelf.Collection.extend({
+        model: ItemTypes
+    });
+
+    var ItemClasses = Bookshelf.Collection.extend({
+        model: ItemClass
+    });
+
     return {
         Models: {
             Person: Person,
             Genre: Genre,
-            Game: Game,
-            Album: Album,
+            Item: Item,
+            ItemType: ItemType,
+            ItemClass:ItemClass,
             Song: Song,
             Artist: Artist,
             GenreType: GenreType
@@ -106,8 +120,9 @@ module.exports = function (Bookshelf) {
         Collections: {
             Persons: Persons,
             Genres: Genres,
-            Games: Games,
-            Albums: Albums,
+            Item: Item,
+            ItemTypes : ItemTypes,
+            ItemClasses: ItemClasses,
             Songs: Songs,
             Artists: Artists,
             GenreTypes: GenreTypes

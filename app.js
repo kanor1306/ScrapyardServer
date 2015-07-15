@@ -1,6 +1,9 @@
 
-//Importamos el servidor Pushd para que se ejecute al lanzar el servidor. Necesario haber lanzado antes Redis.
-require('./pushd/server');
+var Bookshelf = require('bookshelf');
+var config = require('./config');
+
+Bookshelf.PG = Bookshelf.initialize(config.databaseConfig);
+
 var cors = require('cors')
 //Importamos express para gestionar el enrutado de las peticiones
 var express = require('express');
