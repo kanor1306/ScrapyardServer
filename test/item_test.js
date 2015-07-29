@@ -14,29 +14,28 @@ var request = Promise.promisifyAll(require('request'));
 var assert = require('assert');
 var expect = require('expect.js');
 
-var testPerson1 =
-{
-    "id_person":"1",
-    "username": "person1",
-    "password": "person1"
+
+var album_item_type = {
+    name: "album",
+    id_item_type: "1"
 }
 
-var testPerson2 =
-{
-    "id_person":"2",
-    "username": "person2",
-    "password": "person2"
+var game_item_type = {
+    name: "videogame",
+    id_item_type: "2"
 }
 
-var testPerson3 =
-{
-    "id_person":"3",
-    "username": "person3",
-    "password": "person3"
+
+var testGame = {
+    "name": "unitTestGame"
 }
 
-var testPersonList = [testPerson1, testPerson2, testPerson3]
+var testAlbum = {
+    "title": "",
+    "year": "",
+    "id_item_type": "1"
+}
 
-suite('Person model', function () {
+suite('Item model', function () {
 
 });

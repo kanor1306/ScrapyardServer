@@ -40,12 +40,12 @@ module.exports = function (Bookshelf) {
         idAttribute: 'id_genre',
         tableName : 'genre',
         type : function(){
-            return this.hasOne(GenreType);
+            return this.hasOne(GenreType).through(GenreType);
         }
     });
 
     var GenreType =Bookshelf.Model.extend({
-        idAttribute: 'id_type_genre',
+        idAttribute: 'id_genre_type',
         tableName : 'genre_type'
     });
 
