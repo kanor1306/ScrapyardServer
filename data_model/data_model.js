@@ -99,7 +99,7 @@ module.exports = function (Bookshelf) {
     });
 
     var ItemTypes = Bookshelf.Collection.extend({
-        model: ItemTypes
+        model: ItemType
     });
 
     var ItemClasses = Bookshelf.Collection.extend({
