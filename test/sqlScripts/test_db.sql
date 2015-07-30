@@ -487,7 +487,7 @@ ALTER TABLE "public"."artist_song" ADD FOREIGN KEY ("id_artist") REFERENCES "pub
 -- ----------------------------
 -- Foreign Key structure for table "public"."genre"
 -- ----------------------------
-ALTER TABLE "public"."genre" ADD FOREIGN KEY ("id_genre_type") REFERENCES "public"."genre_type" ("id_genre_type") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."genre" ADD FOREIGN KEY ("id_genre_type") REFERENCES "public"."genre_type" ("id_genre_type") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."genre_item"

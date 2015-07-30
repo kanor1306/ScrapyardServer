@@ -80,4 +80,25 @@ suite('Person model', function () {
         });
 
     });
+
+    suite('- Update user', function () {
+        test('must return the updated user', function (done) {
+            testPerson1.password="testUpdatePassword";
+            Models.Person.forge(testPerson1).save().then(function (data) {
+                expect(data.toJSON().id_person).to.eql(testPerson1.id_person);
+                done();
+            });
+        });
+
+    });
+
+    suite('- Delete user', function () {
+        test('must return the deleted user name', function (done) {
+            Models.Person.forge(testPerson1).destroy().then(function (data) {
+                expect(data.toJSON().username).to.exist;
+                done();
+            });
+        });
+
+    });
 });

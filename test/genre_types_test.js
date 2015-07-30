@@ -53,11 +53,42 @@ suite('Genre type model', function () {
     });
 
     suite('- Add genre type', function () {
-        var new_genre_type_id;
 
         test('must return the created genre type', function (done) {
             Models.GenreType.forge({name: "test genre type"}).save().then(function (data) {
-                new_genre_type_id = data.toJSON().id_genre_type;
+                expect(data.toJSON().name).to.exist;
+                done();
+            });
+        });
+
+    });
+
+    suite('- Add genre type', function () {
+        test('must return the created genre type', function (done) {
+            Models.GenreType.forge({name: "test genre type"}).save().then(function (data) {
+                expect(data.toJSON().name).to.exist;
+                done();
+            });
+        });
+
+    });
+
+    suite('- Update genre type', function () {
+        test('must return the updated genre type', function (done) {
+            test_genre_type_1.name="Test update genre type"
+            Models.GenreType.forge(test_genre_type_1).save().then(function (data) {
+                expect(data.toJSON().id_genre_type).to.eql(test_genre_type_1.id_genre_type);
+                done();
+            });
+        });
+
+    });
+
+    suite('- Delete genre type', function () {
+        var new_genre_type_id;
+
+        test('must return the deleted genre type', function (done) {
+            Models.GenreType.forge(test_genre_type_1).destroy().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });
