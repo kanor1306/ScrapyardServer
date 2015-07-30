@@ -120,7 +120,7 @@ module.exports = function (Bookshelf) {
         Collections: {
             Persons: Persons,
             Genres: Genres,
-            Item: Item,
+            Items: Items,
             ItemTypes : ItemTypes,
             ItemClasses: ItemClasses,
             Songs: Songs,

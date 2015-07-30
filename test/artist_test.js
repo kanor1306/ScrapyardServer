@@ -18,19 +18,19 @@ var testUtils = require('./test_utils');
 var testArtist1 =
 {
     "id_artist":"1",
-    "name": "artist 1"
+    "name": "artist_1"
 }
 
 var testArtist2 =
 {
     "id_artist":"2",
-    "name": "artist 2"
+    "name": "artist_2"
 }
 
 var testArtist3 =
 {
     "id_artist":"3",
-    "name": "artist 3"
+    "name": "artist_3"
 }
 
 var testArtistAdd =
@@ -61,8 +61,6 @@ suite('Artist model', function () {
             Models.Artist.forge({id_artist: testArtist1.id_artist}).fetch().then(function (data) {
                 expect(testArtist1).to.eql(data.toJSON());
                 done();
-            }, function(err){
-                console.log(err)
             });
         });
     });
