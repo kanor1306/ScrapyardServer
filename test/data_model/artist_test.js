@@ -1,6 +1,6 @@
 
-var Artist = require('../data/models/artist');
-var Artists = require('../data/collections/artists');
+var Artist = require('../../data_model/models/artist');
+var Artists = require('../../data_model/collections/artists');
 
 var expect = require('expect.js');
 var testUtils = require('./test_utils');

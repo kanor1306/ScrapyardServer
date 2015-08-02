@@ -3,8 +3,8 @@
  */
 
 
-var Song = require('../data/models/song');
-var Songs = require('../data/collections/songs');
+var Song = require('../../data_model/models/song');
+var Songs = require('../../data_model/collections/songs');
 
 var expect = require('expect.js');
 var testUtils = require('./test_utils');

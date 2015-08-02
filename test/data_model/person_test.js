@@ -3,8 +3,8 @@
  */
 
 
-var Person = require('../data/models/person');
-var Persons = require('../data/collections/persons');
+var Person = require('../../data_model/models/person');
+var Persons = require('../../data_model/collections/persons');
 
 var expect = require('expect.js');
 var testUtils = require('./test_utils');

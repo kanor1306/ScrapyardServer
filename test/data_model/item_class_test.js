@@ -3,8 +3,8 @@
  */
 
 
-var ItemClass = require('../data/models/item_class');
-var ItemClasses = require('../data/collections/item_classes');
+var ItemClass = require('../../data_model/models/item_class');
+var ItemClasses = require('../../data_model/collections/item_classes');
 
 var expect = require('expect.js');
 var testUtils = require('./test_utils');

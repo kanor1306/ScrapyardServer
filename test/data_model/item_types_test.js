@@ -2,8 +2,8 @@
  * Created by nicanorgutierrez on 12/07/15.
  */
 
-var ItemType = require('../data/models/item_type');
-var ItemTypes = require('../data/collections/item_types');
+var ItemType = require('../../data_model/models/item_type');
+var ItemTypes = require('../../data_model/collections/item_types');
 
 var expect = require('expect.js');
 var testUtils = require('./test_utils');

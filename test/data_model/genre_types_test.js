@@ -3,8 +3,8 @@
  */
 
 
-var GenreType = require('../data/models/genre_type');
-var GenreTypes = require('../data/collections/genre_types');
+var GenreType = require('../../data_model/models/genre_type');
+var GenreTypes = require('../../data_model/collections/genre_types');
 
 var expect = require('expect.js');
 var testUtils = require('./test_utils');

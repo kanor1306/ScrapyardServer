@@ -4,7 +4,8 @@
   "description": "A Node.js server to test funcionalities and learn new libraries and plugins",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test" : "mocha"
   },
   "dependencies": {
     "bluebird": "0.11.6-0",
