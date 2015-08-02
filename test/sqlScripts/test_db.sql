@@ -312,6 +312,8 @@ INSERT INTO "public"."item_person_song" VALUES ('1', '2', '1');
 INSERT INTO "public"."item_person_song" VALUES ('5', '3', '2');
 INSERT INTO "public"."item_person_song" VALUES ('6', '6', '2');
 INSERT INTO "public"."item_person_song" VALUES ('9', '6', '3');
+INSERT INTO "public"."item_person_song" VALUES ('1', '1', '2');
+
 
 -- ----------------------------
 -- Table structure for item_song

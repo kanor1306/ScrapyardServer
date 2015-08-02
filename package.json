@@ -42,6 +42,8 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "blanket": "^1.1.7"
+  },
   "author": "kanor1306"
 }

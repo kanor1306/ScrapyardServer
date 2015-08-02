@@ -3,7 +3,7 @@ module.exports = function (Bookshelf) {
         idAttribute: 'id_person',
         tableName : 'person',
         items: function () {
-            return this.belongsToMany(Album).through(Album,"person_album", "id_person","id_album");
+            return this.belongsToMany(Item, "item_person","id_person","id_item");
         }
     });
 
@@ -11,22 +11,31 @@ module.exports = function (Bookshelf) {
         idAttribute: 'id_item',
         tableName : 'item',
         type : function(){
-            return this.hasOne(ItemType);
+            return this.hasOne(ItemType, "id_item_type");
         },
         itemClass : function(){
-            return this.hasOne(ItemClass);
+            return this.hasOne(ItemClass, "id_item_class");
         },
         persons:function () {
-            return this.belongsToMany(Person).through(Person,"item_person", "id_item","id_person");
+            return this.belongsToMany(Person, "item_person","id_item", "id_person");
         },
         songs:function(){
-            return this.belongsToMany(Artist).through(Artist,"item_songs", "id_item","id_song");
+            return this.belongsToMany(Songs,"item_song", "id_item","id_song");
         },
         genres : function(){
-            return this.belongsToMany(Genre).through(Genre,"item_genre", "id_item","id_genre");
+            return this.belongsToMany(Genre,"genre_item", "id_item","id_genre");
+        },
+        songsByPerson : function(id_person){
+            return this.belongsToMany(Songs,"item_person_song", "id_item","id_song").query('where', 'id_person', '=', id_person)
         }
     });
 
+
+
+    var ItemPersonSong = Bookshelf.Model.extend({
+        idAttribute: ['id_person','id_song','id_item'],
+        tableName : 'item_person_song'
+    });
 
     var Artist = Bookshelf.Model.extend({
         idAttribute: 'id_artist',
@@ -79,7 +88,13 @@ module.exports = function (Bookshelf) {
     });
 
     var Items = Bookshelf.Collection.extend({
-        model: Item
+        model: Item,
+        byType : function(id_item_type){
+             return this.query('where', 'id_item_type', '=', id_item_type)
+        },
+        byClass : function(id_item_class){
+            return this.query('where', 'id_item_class', '=', id_item_class)
+        }
     });
 
     var Genres = Bookshelf.Collection.extend({

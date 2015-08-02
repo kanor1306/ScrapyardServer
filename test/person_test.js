@@ -15,23 +15,25 @@ var assert = require('assert');
 var expect = require('expect.js');
 var testUtils = require('./test_utils');
 
+var items_related_length = 3;
+
 var testPerson1 =
 {
-    "id_person":"1",
+    "id_person": "1",
     "username": "person_1",
     "password": "person_1"
 }
 
 var testPerson2 =
 {
-    "id_person":"2",
+    "id_person": "2",
     "username": "person_2",
     "password": "person_2"
 }
 
 var testPerson3 =
 {
-    "id_person":"3",
+    "id_person": "3",
     "username": "person_3",
     "password": "person_3"
 }
@@ -45,15 +47,15 @@ var testPersonAdd =
 var testPersonList = [testPerson1, testPerson2, testPerson3]
 
 suite('Person model', function () {
-    setup(function(done){
+    setup(function (done) {
         testUtils.prepare_db(done)
     });
-    teardown(function(done){
+    teardown(function (done) {
         testUtils.clean_db(done)
     });
     suite('- List users', function () {
         test('Must return a list of users', function (done) {
-            Collections.Persons.forge().fetch().then(function (data){
+            Collections.Persons.forge().fetch().then(function (data) {
                 expect(testPersonList.length).to.eql(data.toJSON().length);
                 done();
             });
@@ -65,7 +67,7 @@ suite('Person model', function () {
             Models.Person.forge({id_person: testPerson1.id_person}).fetch().then(function (data) {
                 expect(testPerson1).to.eql(data.toJSON());
                 done();
-            }, function(err){
+            }, function (err) {
                 console.log(err)
             });
         });
@@ -83,7 +85,7 @@ suite('Person model', function () {
 
     suite('- Update user', function () {
         test('must return the updated user', function (done) {
-            testPerson1.password="testUpdatePassword";
+            testPerson1.password = "testUpdatePassword";
             Models.Person.forge(testPerson1).save().then(function (data) {
                 expect(data.toJSON().id_person).to.eql(testPerson1.id_person);
                 done();
@@ -101,4 +103,15 @@ suite('Person model', function () {
         });
 
     });
+
+    suite('- Get user items', function () {
+        test('must return a list of items', function (done) {
+            Models.Person.forge({id_person: testPerson1.id_person}).fetch({
+                withRelated: ['items']
+            }).then(function (data) {
+                expect(items_related_length).to.eql(data.toJSON().items.length);
+                done();
+            });
+        });
+    })
 });
