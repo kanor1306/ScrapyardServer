@@ -2,20 +2,14 @@
  * Created by nicanorgutierrez on 12/07/15.
  */
 
-var Bookshelf = require('bookshelf');
-var config = require('../config');
-Bookshelf.PG = Bookshelf.initialize(config.developmentDatabaseConfig);
 
-var Models = require('../data_model/data_model')(Bookshelf.PG).Models;
-var Collections = require('../data_model/data_model')(Bookshelf.PG).Collections;
+var Person = require('../data/models/person');
+var Persons = require('../data/collections/persons');
 
-var Promise = require('bluebird');
-var request = Promise.promisifyAll(require('request'));
-var assert = require('assert');
 var expect = require('expect.js');
 var testUtils = require('./test_utils');
-
 var items_related_length = 3;
+var marked_songs_length = 2;
 
 var testPerson1 =
 {
@@ -55,7 +49,7 @@ suite('Person model', function () {
     });
     suite('- List users', function () {
         test('Must return a list of users', function (done) {
-            Collections.Persons.forge().fetch().then(function (data) {
+            Persons.forge().fetch().then(function (data) {
                 expect(testPersonList.length).to.eql(data.toJSON().length);
                 done();
             });
@@ -64,7 +58,7 @@ suite('Person model', function () {
 
     suite('- Get user  by id', function () {
         test('Must return an user object', function (done) {
-            Models.Person.forge({id_person: testPerson1.id_person}).fetch().then(function (data) {
+            Person.forge({id_person: testPerson1.id_person}).fetch().then(function (data) {
                 expect(testPerson1).to.eql(data.toJSON());
                 done();
             }, function (err) {
@@ -75,7 +69,7 @@ suite('Person model', function () {
 
     suite('- Add user', function () {
         test('must return the created user name', function (done) {
-            Models.Person.forge(testPersonAdd).save().then(function (data) {
+            Person.forge(testPersonAdd).save().then(function (data) {
                 expect(data.toJSON().username).to.exist;
                 done();
             });
@@ -86,7 +80,7 @@ suite('Person model', function () {
     suite('- Update user', function () {
         test('must return the updated user', function (done) {
             testPerson1.password = "testUpdatePassword";
-            Models.Person.forge(testPerson1).save().then(function (data) {
+            Person.forge(testPerson1).save().then(function (data) {
                 expect(data.toJSON().id_person).to.eql(testPerson1.id_person);
                 done();
             });
@@ -96,7 +90,7 @@ suite('Person model', function () {
 
     suite('- Delete user', function () {
         test('must return the deleted user name', function (done) {
-            Models.Person.forge(testPerson1).destroy().then(function (data) {
+            Person.forge(testPerson1).destroy().then(function (data) {
                 expect(data.toJSON().username).to.exist;
                 done();
             });
@@ -106,10 +100,19 @@ suite('Person model', function () {
 
     suite('- Get user items', function () {
         test('must return a list of items', function (done) {
-            Models.Person.forge({id_person: testPerson1.id_person}).fetch({
+            Person.forge({id_person: testPerson1.id_person}).fetch({
                 withRelated: ['items']
             }).then(function (data) {
                 expect(items_related_length).to.eql(data.toJSON().items.length);
+                done();
+            });
+        });
+    })
+
+    suite('- Get user marked songs', function () {
+        test('must return a list of songs', function (done) {
+            Person.forge({id_person: testPerson1.id_person}).markedSongs().fetch().then(function (data) {
+                expect(marked_songs_length).to.eql(data.toJSON().length);
                 done();
             });
         });

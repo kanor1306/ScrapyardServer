@@ -1,17 +1,7 @@
-/**
- * Created by nicanorgutierrez on 12/07/15.
- */
 
-var Bookshelf = require('bookshelf');
-var config = require('../config');
-Bookshelf.PG = Bookshelf.initialize(config.developmentDatabaseConfig);
+var Artist = require('../data/models/artist');
+var Artists = require('../data/collections/artists');
 
-var Models = require('../data_model/data_model')(Bookshelf.PG).Models;
-var Collections = require('../data_model/data_model')(Bookshelf.PG).Collections;
-
-var Promise = require('bluebird');
-var request = Promise.promisifyAll(require('request'));
-var assert = require('assert');
 var expect = require('expect.js');
 var testUtils = require('./test_utils');
 
@@ -49,7 +39,7 @@ suite('Artist model', function () {
     });
     suite('- List artists', function () {
         test('Must return a list of artists', function (done) {
-            Collections.Artists.forge().fetch().then(function (data){
+            Artists.forge().fetch().then(function (data){
                 expect(testArtistList.length).to.eql(data.toJSON().length);
                 done();
             });
@@ -58,7 +48,7 @@ suite('Artist model', function () {
 
     suite('- Get artist  by id', function () {
         test('Must return an artist object', function (done) {
-            Models.Artist.forge({id_artist: testArtist1.id_artist}).fetch().then(function (data) {
+            Artist.forge({id_artist: testArtist1.id_artist}).fetch().then(function (data) {
                 expect(testArtist1).to.eql(data.toJSON());
                 done();
             });
@@ -67,7 +57,7 @@ suite('Artist model', function () {
 
     suite('- Add artist', function () {
         test('must return the created artist name', function (done) {
-            Models.Artist.forge(testArtistAdd).save().then(function (data) {
+            Artist.forge(testArtistAdd).save().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });
@@ -78,7 +68,7 @@ suite('Artist model', function () {
     suite('- Update artist', function () {
         test('must return the updated artist', function (done) {
             testArtist1.name="testUpdateName";
-            Models.Artist.forge(testArtist1).save().then(function (data) {
+            Artist.forge(testArtist1).save().then(function (data) {
                 expect(data.toJSON().id_artist).to.eql(testArtist1.id_artist);
                 done();
             });
@@ -88,7 +78,7 @@ suite('Artist model', function () {
 
     suite('- Delete artist', function () {
         test('must return the deleted artist name', function (done) {
-            Models.Artist.forge(testArtist1).destroy().then(function (data) {
+            Artist.forge(testArtist1).destroy().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });

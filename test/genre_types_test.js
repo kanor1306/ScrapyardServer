@@ -2,16 +2,10 @@
  * Created by nicanorgutierrez on 12/07/15.
  */
 
-var Bookshelf = require('bookshelf');
-var config = require('../config');
-Bookshelf.PG = Bookshelf.initialize(config.developmentDatabaseConfig);
 
-var Models = require('../data_model/data_model')(Bookshelf.PG).Models;
-var Collections = require('../data_model/data_model')(Bookshelf.PG).Collections;
+var GenreType = require('../data/models/genre_type');
+var GenreTypes = require('../data/collections/genre_types');
 
-var Promise = require('bluebird');
-var request = Promise.promisifyAll(require('request'));
-var assert = require('assert');
 var expect = require('expect.js');
 var testUtils = require('./test_utils');
 
@@ -36,7 +30,7 @@ suite('Genre type model', function () {
     });
     suite('- List genre types', function () {
         test('Must return a list of genre types', function (done) {
-            Collections.GenreTypes.forge().fetch().then(function (data){
+            GenreTypes.forge().fetch().then(function (data){
                 expect(test_genre_types_list.length).to.eql(data.toJSON().length);
                 done();
             });
@@ -45,7 +39,7 @@ suite('Genre type model', function () {
 
     suite('- Get genre type by id', function () {
         test('Must return a genre type object', function (done) {
-            Models.GenreType.forge({id_genre_type: 1}).fetch().then(function (data) {
+            GenreType.forge({id_genre_type: 1}).fetch().then(function (data) {
                 expect(test_genre_type_1).to.eql(data.toJSON());
                 done();
             });
@@ -55,7 +49,7 @@ suite('Genre type model', function () {
     suite('- Add genre type', function () {
 
         test('must return the created genre type', function (done) {
-            Models.GenreType.forge({name: "test genre type"}).save().then(function (data) {
+            GenreType.forge({name: "test genre type"}).save().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });
@@ -65,7 +59,7 @@ suite('Genre type model', function () {
 
     suite('- Add genre type', function () {
         test('must return the created genre type', function (done) {
-            Models.GenreType.forge({name: "test genre type"}).save().then(function (data) {
+            GenreType.forge({name: "test genre type"}).save().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });
@@ -76,7 +70,7 @@ suite('Genre type model', function () {
     suite('- Update genre type', function () {
         test('must return the updated genre type', function (done) {
             test_genre_type_1.name="Test update genre type"
-            Models.GenreType.forge(test_genre_type_1).save().then(function (data) {
+            GenreType.forge(test_genre_type_1).save().then(function (data) {
                 expect(data.toJSON().id_genre_type).to.eql(test_genre_type_1.id_genre_type);
                 done();
             });
@@ -88,7 +82,7 @@ suite('Genre type model', function () {
         var new_genre_type_id;
 
         test('must return the deleted genre type', function (done) {
-            Models.GenreType.forge(test_genre_type_1).destroy().then(function (data) {
+            GenreType.forge(test_genre_type_1).destroy().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });

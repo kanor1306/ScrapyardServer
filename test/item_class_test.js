@@ -2,16 +2,10 @@
  * Created by nicanorgutierrez on 12/07/15.
  */
 
-var Bookshelf = require('bookshelf');
-var config = require('../config');
-Bookshelf.PG = Bookshelf.initialize(config.developmentDatabaseConfig);
 
-var Models = require('../data_model/data_model')(Bookshelf.PG).Models;
-var Collections = require('../data_model/data_model')(Bookshelf.PG).Collections;
+var ItemClass = require('../data/models/item_class');
+var ItemClasses = require('../data/collections/item_classes');
 
-var Promise = require('bluebird');
-var request = Promise.promisifyAll(require('request'));
-var assert = require('assert');
 var expect = require('expect.js');
 var testUtils = require('./test_utils');
 
@@ -37,7 +31,7 @@ suite('Item class model', function () {
     });
     suite('- List item classs', function () {
         test('Must return a list of item classs', function (done) {
-            Collections.ItemClasses.forge().fetch().then(function (data){
+            ItemClasses.forge().fetch().then(function (data){
                 expect(item_classes_list_length).to.eql(data.toJSON().length);
                 done();
             });
@@ -46,7 +40,7 @@ suite('Item class model', function () {
 
     suite('- Get item class by id', function () {
         test('Must return a item class object', function (done) {
-            Models.ItemClass.forge({id_item_class: 1}).fetch().then(function (data) {
+            ItemClass.forge({id_item_class: 1}).fetch().then(function (data) {
                 expect(test_item_class_1).to.eql(data.toJSON());
                 done();
             });
@@ -56,7 +50,7 @@ suite('Item class model', function () {
     suite('- Add item class', function () {
 
         test('must return the created item class', function (done) {
-            Models.ItemClass.forge({name: "test item class"}).save().then(function (data) {
+            ItemClass.forge({name: "test item class"}).save().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });
@@ -66,7 +60,7 @@ suite('Item class model', function () {
 
     suite('- Add item class', function () {
         test('must return the created item class', function (done) {
-            Models.ItemClass.forge({name: "test item class"}).save().then(function (data) {
+            ItemClass.forge({name: "test item class"}).save().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });
@@ -77,7 +71,7 @@ suite('Item class model', function () {
     suite('- Update item class', function () {
         test('must return the updated item class', function (done) {
             test_item_class_1.name="Test update item class"
-            Models.ItemClass.forge(test_item_class_1).save().then(function (data) {
+            ItemClass.forge(test_item_class_1).save().then(function (data) {
                 expect(data.toJSON().id_item_class).to.eql(test_item_class_1.id_item_class);
                 done();
             });
@@ -89,7 +83,7 @@ suite('Item class model', function () {
         var new_item_class_id;
 
         test('must return the deleted item class', function (done) {
-            Models.ItemClass.forge(test_item_class_1).destroy().then(function (data) {
+            ItemClass.forge(test_item_class_1).destroy().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
             });

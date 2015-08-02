@@ -2,16 +2,10 @@
  * Created by nicanorgutierrez on 12/07/15.
  */
 
-var Bookshelf = require('bookshelf');
-var config = require('../config');
-Bookshelf.PG = Bookshelf.initialize(config.developmentDatabaseConfig);
 
-var Models = require('../data_model/data_model')(Bookshelf.PG).Models;
-var Collections = require('../data_model/data_model')(Bookshelf.PG).Collections;
+var Song = require('../data/models/song');
+var Songs = require('../data/collections/songs');
 
-var Promise = require('bluebird');
-var request = Promise.promisifyAll(require('request'));
-var assert = require('assert');
 var expect = require('expect.js');
 var testUtils = require('./test_utils');
 
@@ -24,6 +18,10 @@ var testSong1 =
     "length": 60
 }
 
+var test_artist_1={
+    "id_artist" : "1",
+    "name":"artist_1"
+}
 
 var testSongAdd =
 {
@@ -40,7 +38,7 @@ suite('Song model', function () {
     });
     suite('- List songs', function () {
         test('Must return a list of songs', function (done) {
-            Collections.Songs.forge().fetch().then(function (data) {
+            Songs.forge().fetch().then(function (data) {
                 expect(songsListLength).to.eql(data.toJSON().length);
                 done();
             });
@@ -49,7 +47,7 @@ suite('Song model', function () {
 
     suite('- Get song  by id', function () {
         test('Must return an song object', function (done) {
-            Models.Song.forge({id_song: testSong1.id_song}).fetch().then(function (data) {
+            Song.forge({id_song: testSong1.id_song}).fetch().then(function (data) {
                 expect(testSong1).to.eql(data.toJSON());
                 done();
             }, function (err) {
@@ -60,7 +58,7 @@ suite('Song model', function () {
 
     suite('- Add song', function () {
         test('must return the created song title', function (done) {
-            Models.Song.forge(testSongAdd).save().then(function (data) {
+            Song.forge(testSongAdd).save().then(function (data) {
                 expect(data.toJSON().title).to.exist;
                 done();
             });
@@ -71,7 +69,7 @@ suite('Song model', function () {
     suite('- Update song', function () {
         test('must return the updated song', function (done) {
             testSong1.title = "testUpdateTitle";
-            Models.Song.forge(testSong1).save().then(function (data) {
+            Song.forge(testSong1).save().then(function (data) {
                 expect(data.toJSON().id_song).to.eql(testSong1.id_song);
                 done();
             });
@@ -81,11 +79,22 @@ suite('Song model', function () {
 
     suite('- Delete song', function () {
         test('must return the deleted song title', function (done) {
-            Models.Song.forge(testSong1).destroy().then(function (data) {
+            Song.forge(testSong1).destroy().then(function (data) {
                 expect(data.toJSON().title).to.exist;
                 done();
             });
         });
 
+    });
+
+    suite('- Get artist song', function () {
+        test('Must return the artist of the song', function (done) {
+            Song.forge({id_song: testSong1.id_song}).artist().fetch().then(function (data) {
+                expect(test_artist_1.id_artist).to.eql(data.toJSON()[0].id_artist);
+                done();
+            }, function (err) {
+                console.log(err)
+            });
+        });
     });
 });

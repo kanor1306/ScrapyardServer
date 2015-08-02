@@ -2,16 +2,10 @@
  * Created by nicanorgutierrez on 12/07/15.
  */
 
-var Bookshelf = require('bookshelf');
-var config = require('../config');
-Bookshelf.PG = Bookshelf.initialize(config.developmentDatabaseConfig);
 
-var Models = require('../data_model/data_model')(Bookshelf.PG).Models;
-var Collections = require('../data_model/data_model')(Bookshelf.PG).Collections;
+var Item = require('../data/models/item');
+var Items = require('../data/collections/items');
 
-var Promise = require('bluebird');
-var request = Promise.promisifyAll(require('request'));
-var assert = require('assert');
 var expect = require('expect.js');
 var testUtils = require('./test_utils');
 
@@ -74,7 +68,7 @@ suite('Item model', function () {
     });
     suite('- List items', function () {
         test('Must return a list of items', function (done) {
-            Collections.Items.forge().fetch().then(function (data) {
+            Items.forge().fetch().then(function (data) {
                 expect(itemsListLength).to.eql(data.toJSON().length);
                 done();
             });
@@ -83,7 +77,7 @@ suite('Item model', function () {
 
     suite('- Get item  by id', function () {
         test('Must return an item object', function (done) {
-            Models.Item.forge({id_item: testItem1.id_item}).fetch().then(function (data) {
+            Item.forge({id_item: testItem1.id_item}).fetch().then(function (data) {
                 expect(testItem1).to.eql(data.toJSON());
                 done();
             }, function (err) {
@@ -94,7 +88,7 @@ suite('Item model', function () {
 
     suite('- Add item', function () {
         test('must return the created item title', function (done) {
-            Models.Item.forge(testItemAdd).save().then(function (data) {
+            Item.forge(testItemAdd).save().then(function (data) {
                 expect(data.toJSON().title).to.exist;
                 done();
             });
@@ -105,7 +99,7 @@ suite('Item model', function () {
     suite('- Update item', function () {
         test('must return the updated item', function (done) {
             testItem1.title = "testUpdateTitle";
-            Models.Item.forge(testItem1).save().then(function (data) {
+            Item.forge(testItem1).save().then(function (data) {
                 expect(data.toJSON().id_item).to.eql(testItem1.id_item);
                 done();
             });
@@ -115,7 +109,7 @@ suite('Item model', function () {
 
     suite('- Delete item', function () {
         test('must return the deleted item title', function (done) {
-            Models.Item.forge(testItem1).destroy().then(function (data) {
+            Item.forge(testItem1).destroy().then(function (data) {
                 expect(data.toJSON().title).to.exist;
                 done();
             });
@@ -124,7 +118,7 @@ suite('Item model', function () {
 
     suite('- Get item type', function () {
         test('must return a item type', function (done) {
-            Models.Item.forge({id_item: testItem1.id_item}).type().fetch().then(function (data) {
+            Item.forge({id_item: testItem1.id_item}).type().fetch().then(function (data) {
                 expect(test_item_type_1.name).to.eql(data.toJSON().name);
                 done();
             });
@@ -133,7 +127,7 @@ suite('Item model', function () {
 
     suite('- Get item class', function () {
         test('must return a item class', function (done) {
-            Models.Item.forge({id_item: testItem1.id_item}).itemClass().fetch().then(function (data) {
+            Item.forge({id_item: testItem1.id_item}).itemClass().fetch().then(function (data) {
                 expect(test_item_class_1.name).to.eql(data.toJSON().name);
                 done();
             });
@@ -142,7 +136,7 @@ suite('Item model', function () {
 
     suite('- Get item persons', function () {
         test('must return a list of item persons', function (done) {
-            Models.Item.forge({id_item: testItem1.id_item}).persons().fetch().then(function (data) {
+            Item.forge({id_item: testItem1.id_item}).persons().fetch().then(function (data) {
                 expect(list_item_persons_lenght).to.eql(data.toJSON().length);
                 done();
             });
@@ -151,7 +145,7 @@ suite('Item model', function () {
 
     suite('- Get item songs', function () {
         test('must return a list of songs of an item', function (done) {
-            Models.Item.forge({id_item: testItem1.id_item}).songs().fetch().then(function (data) {
+            Item.forge({id_item: testItem1.id_item}).songs().fetch().then(function (data) {
                 expect(list_item_songs_lenght).to.eql(data.toJSON().length);
                 done();
             });
@@ -160,7 +154,7 @@ suite('Item model', function () {
 
     suite('- Get item songs by person', function () {
         test('must return a list of songs of an item selected by a person', function (done) {
-            Models.Item.forge({id_item: testItem1.id_item}).songsByPerson(test_person_1.id_person).fetch().then(function (data) {
+            Item.forge({id_item: testItem1.id_item}).songsMarkedByPerson(test_person_1.id_person).fetch().then(function (data) {
                 expect(list_songs_of_item_by_person_1).to.eql(data.toJSON().length);
                 done();
             });
@@ -169,7 +163,7 @@ suite('Item model', function () {
 
     suite('- Get item genres', function () {
         test('must return a list of genres of an item', function (done) {
-            Models.Item.forge({id_item: testItem1.id_item}).genres().fetch().then(function (data) {
+            Item.forge({id_item: testItem1.id_item}).genres().fetch().then(function (data) {
                 expect(list_item_genres_lenght).to.eql(data.toJSON().length);
                 done();
             });
@@ -178,7 +172,7 @@ suite('Item model', function () {
 
     suite('- Get items by item class', function () {
         test('must return a list of items of a class', function (done) {
-            Collections.Items.forge().byClass(test_item_class_1.id_item_class).fetch().then(function (data) {
+            Items.forge().byClass(test_item_class_1.id_item_class).fetch().then(function (data) {
                 expect(list_item_by_class_1).to.eql(data.toJSON().length);
                 done();
             });
@@ -187,7 +181,7 @@ suite('Item model', function () {
 
     suite('- Get items by item type', function () {
         test('must return a list of items of a class', function (done) {
-            Collections.Items.forge().byType(test_item_type_1.id_item_type).fetch().then(function (data) {
+            Items.forge().byType(test_item_type_1.id_item_type).fetch().then(function (data) {
                 expect(list_item_by_type_1).to.eql(data.toJSON().length);
                 done();
             });
