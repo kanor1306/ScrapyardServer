@@ -6,14 +6,9 @@
  *
  */
 
-//Enrutador a los servicios web de dispositivos
 exports.index = require('./index');
 
-//Enrutador a los servicios web de dispositivos
-exports.album = require('./album');
+//Router genre WS
+exports.album = require('./genre');
 
-//Enrutador a los servicios web de aplicaciones
-exports.game = require('./game');
 
-//Enrutador a los servicios web de usuarios
-exports.user = require('./user');

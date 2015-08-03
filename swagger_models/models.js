@@ -2,19 +2,23 @@
  * Created by nicanor.gutierrez on 24/02/14.
  */
 
-var user_models = require("./user_models");
-var game_models = require("./game_models");
-var album_models = require("./album_models");
+var genre_swagger_model = require("./genre_model");
+var genre_type_swagger_model = require("./genre_type_model");
 
+module.exports = (function (genre_swagger_model, genre_type_swagger_model) {
 
-exports.getModels = function(){
-    var modelsArray = [user_models, album_models, game_models];
-    var models={};
-    for(c in modelsArray){
-        var model = modelsArray[c];
-        for(m in model){
-            models[m]=model[m];
+    return {
+        getModels : function () {
+            var modelsArray = [genre_swagger_model, genre_type_swagger_model];
+            var models = {};
+            for (c in modelsArray) {
+                var model = modelsArray[c];
+                for (m in model) {
+                    models[m] = model[m];
+                }
+            }
+            return models;
         }
     }
-    return models;
-}
+
+})(genre_swagger_model, genre_type_swagger_model);
