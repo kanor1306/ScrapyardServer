@@ -4,7 +4,7 @@
 
 $(function () {
     window.swaggerUi = new SwaggerUi({
-        url: "http://localhost:3000/api-docs.json",
+        url: "http://scrapyardserver.herokuapp.com/api-docs.json",
         dom_id: "swagger-ui-container",
         supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
         onComplete: function(swaggerApi, swaggerUi){

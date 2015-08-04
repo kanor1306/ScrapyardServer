@@ -9,3 +9,5 @@ This is being based in a simple user management server that I did some time ago.
 
 Right now in development, so it is not working :)
 
+The advances, in the form of a Swagger API can be seen in: http://scrapyardserver.herokuapp.com/
+
