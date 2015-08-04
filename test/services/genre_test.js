@@ -12,38 +12,38 @@ var rp = require('request-promise');
 
 
 var music_genre_1 = {
-    name: "music_genre_1",
-    id_genre: "2",
+    "name": "music_genre_1",
+    "id_genre": "2",
     "id_genre_type": "1"
 };
 var music_genre_2 = {
-    name: "music_genre_2",
-    id_genre: "3",
+    "name": "music_genre_2",
+    "id_genre": "3",
     "id_genre_type": "1"
 };
 var music_genre_3 = {
-    name: "music_genre_3",
-    id_genre: "4",
+    "name": "music_genre_3",
+    "id_genre": "4",
     "id_genre_type": "1"
 };
 var game_genre_1 = {
-    name: "game_genre_2",
-    id_genre: "6",
+    "name": "game_genre_2",
+    "id_genre": "6",
     "id_genre_type": "2"
 }
 var game_genre_2 = {
-    name: "game test genre 2",
-    id_genre: "7",
+    "name": "game test genre 2",
+    "id_genre": "7",
     "id_genre_type": "2"
 }
 var game_genre_3 = {
-    name: "game test genre 2",
-    id_genre: "8",
+    "name": "game test genre 2",
+    "id_genre": "8",
     "id_genre_type": "2"
 }
 
 var test_genre = {
-    name: "test genre",
+    "name": "test genre",
     "id_genre_type": "2"
 }
 
@@ -63,26 +63,42 @@ suite('Genre Web Services', function () {
     });
     suite('- List genres', function () {
         test('Must return a list of genres', function (done) {
-            rp(testUtils.BASE_URL + "/genre/list").then(function (response) {
-                expect(test_genres_list.length).to.eql(response.body.length);
+            var options = {
+                uri: testUtils.BASE_URL + "/genre/list",
+                method: 'GET',
+                json: true
+            }
+            rp(options).then(function (response) {
+                expect(test_genres_list.length).to.eql(response.length);
                 done();
             });
         });
     });
 
     suite('- List genres by genre type', function () {
+
         test('Must return a list of genres', function (done) {
-            rp(testUtils.BASE_URL + "/genre/listByType/" + game_genre_1.id_genre_type).then(function (response) {
-                expect(test_game_genres_list.length).to.eql(response.body.length);
+            var options = {
+                uri: testUtils.BASE_URL + "/genre/listByType/" + game_genre_1.id_genre_type,
+                method: 'GET',
+                json: true
+            }
+            rp(options).then(function (response) {
+                expect(test_game_genres_list.length).to.eql(response.length);
                 done();
             });
         });
     });
 
     suite('- Get genre  by id', function () {
+        var options = {
+            uri: testUtils.BASE_URL + "/genre/detail/" + music_genre_1.id_genre,
+            method: 'GET',
+            json: true
+        }
         test('Must return a genre  object', function (done) {
-            rp(testUtils.BASE_URL + "/genre/byId/" + music_genre_1.id_genre).then(function (response) {
-                expect(music_genre_1.id_genre).to.eql(response.body.id_genre);
+            rp(options).then(function (response) {
+                expect(music_genre_1.id_genre).to.eql(response.id_genre);
                 done();
             });
         });
@@ -98,7 +114,7 @@ suite('Genre Web Services', function () {
             }
 
             rp(options).then(function (response) {
-                expect(response.body.name).to.exist;
+                expect(response.name).to.exist;
                 done();
             });
         });
@@ -110,13 +126,13 @@ suite('Genre Web Services', function () {
             music_genre_1.name = "Test update genre;"
             var options = {
                 uri: testUtils.BASE_URL + "/genre/update",
-                method: 'DELETE',
+                method: 'PUT',
                 json: true,
                 body: music_genre_1
             }
 
             rp(options).then(function (response) {
-                expect(response.body.id_genre).to.eql(music_genre_1.id_genre);
+                expect(response.id_genre).to.eql(music_genre_1.id_genre);
                 done();
             });
 
@@ -127,14 +143,14 @@ suite('Genre Web Services', function () {
     suite('- Delete genre', function () {
         test('must return the deleted genre type', function (done) {
             var options = {
-                uri: testUtils.BASE_URL + "/genre/destroy",
-                method: 'PUT',
+                uri: testUtils.BASE_URL + "/genre/destroy/"+music_genre_1.id_genre,
+                method: 'DELETE',
                 json: true,
                 body: music_genre_1
             }
 
             rp(options).then(function (response) {
-                expect(response.body.name).to.exist;
+                expect(response).to.exist;
                 done();
             });
 

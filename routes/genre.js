@@ -65,9 +65,9 @@ module.exports = (function (genres_controller) {
         //If not will return the corresponding error code.
         create: function (req, res) {
             console.log("Entering router genre.js: create")
-            var name = req.body.name;
-            var id_genre_type = req.body.id_genre_type;
-            genres_controller.create(name, id_genre_type).then(
+           /* var name = req.body.name;
+            var id_genre_type = req.body.id_genre_type;*/
+            genres_controller.create(req.body).then(
                 function (controllerResponse) {
                     res.statusCode = 201;
                     res.setHeader('Content-Type', 'application/json');
@@ -104,9 +104,9 @@ module.exports = (function (genres_controller) {
         destroy: function (req, res) {
             console.log("Entrando router genre.js: delete")
             var id_genre = req.params.id_genre;
-            genres_controller.delete(id_genre).then(
+            genres_controller.destroy(id_genre).then(
                 function (controllerResponse) {
-                    es.statusCode = 204;
+                    res.statusCode = 204;
                     res.setHeader('Content-Type', 'application/json');
                     res.send(controllerResponse);
                 },

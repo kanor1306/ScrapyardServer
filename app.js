@@ -84,7 +84,7 @@ var genreListByType = {
     'spec': {
         "description" : "List of genres by genre type",
         "path" : "/genre/listByType/{id_genre_type}",
-        "notes" : "Returns the list of genres filteres by its genre type",
+        "notes" : "Returns the list of genres filtered by its genre type",
         "summary" : "List of genres by type",
         "method": "GET",
         "type" : "Collection[Genre]",

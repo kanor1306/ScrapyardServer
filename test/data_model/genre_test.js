@@ -88,7 +88,7 @@ suite('Genre model', function () {
     });
 
     suite('- Add genre', function () {
-        test('must return the created genre type', function (done) {
+        test('must return the created genre', function (done) {
             Genre.forge(test_genre).save().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
@@ -98,7 +98,7 @@ suite('Genre model', function () {
     });
 
     suite('- Update genre', function () {
-        test('must return the updated genre type', function (done) {
+        test('must return the updated genre', function (done) {
             music_genre_1.name="Test update genre;"
             Genre.forge(music_genre_1).save().then(function (data) {
                 expect(data.toJSON().id_genre).to.eql(music_genre_1.id_genre);
@@ -109,7 +109,7 @@ suite('Genre model', function () {
     });
 
     suite('- Delete genre', function () {
-        test('must return the deleted genre type', function (done) {
+        test('must return the deleted genre', function (done) {
             Genre.forge(music_genre_1).destroy().then(function (data) {
                 expect(data.toJSON().name).to.exist;
                 done();
