@@ -24,3 +24,5 @@ exports.clean_db = function(done){
         }
     });
 }
+
+exports.BASE_URL = "http://localhost:3000"

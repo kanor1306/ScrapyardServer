@@ -7,7 +7,7 @@ var Item = require('../../data_model/models/item');
 var Items = require('../../data_model/collections/items');
 
 var expect = require('expect.js');
-var testUtils = require('./test_utils');
+var testUtils = require('./../test_utils');
 
 var itemsListLength = 8;
 var list_item_persons_lenght = 2;

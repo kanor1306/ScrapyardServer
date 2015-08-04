@@ -7,7 +7,7 @@ var Genre = require('../../data_model/models/genre');
 var Genres = require('../../data_model/collections/genres');
 
 var expect = require('expect.js');
-var testUtils = require('./test_utils');
+var testUtils = require('./../test_utils');
 
 
 var music_genre_1 = {

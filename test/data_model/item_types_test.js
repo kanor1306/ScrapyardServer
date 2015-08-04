@@ -6,7 +6,7 @@ var ItemType = require('../../data_model/models/item_type');
 var ItemTypes = require('../../data_model/collections/item_types');
 
 var expect = require('expect.js');
-var testUtils = require('./test_utils');
+var testUtils = require('./../test_utils');
 
 var item_types_list_length = 3;
 

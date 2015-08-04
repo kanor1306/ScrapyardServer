@@ -3,7 +3,7 @@ var Artist = require('../../data_model/models/artist');
 var Artists = require('../../data_model/collections/artists');
 
 var expect = require('expect.js');
-var testUtils = require('./test_utils');
+var testUtils = require('./../test_utils');
 
 var testArtist1 =
 {

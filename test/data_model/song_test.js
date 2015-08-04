@@ -7,7 +7,7 @@ var Song = require('../../data_model/models/song');
 var Songs = require('../../data_model/collections/songs');
 
 var expect = require('expect.js');
-var testUtils = require('./test_utils');
+var testUtils = require('./../test_utils');
 
 var songsListLength = 10;
 

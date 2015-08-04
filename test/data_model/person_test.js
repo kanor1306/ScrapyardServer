@@ -7,7 +7,7 @@ var Person = require('../../data_model/models/person');
 var Persons = require('../../data_model/collections/persons');
 
 var expect = require('expect.js');
-var testUtils = require('./test_utils');
+var testUtils = require('./../test_utils');
 var items_related_length = 3;
 var marked_songs_length = 2;
 
