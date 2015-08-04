@@ -404,7 +404,7 @@ INSERT INTO "public"."song" VALUES ('9', '60', 'song_9');
 INSERT INTO "public"."song" VALUES ('10', '60', 'song_10');
 
 -- ----------------------------
--- Alter Sequences Owned By 
+-- Alter Sequences Owned By
 -- ----------------------------
 ALTER SEQUENCE "public"."artist_id_artist_seq" OWNED BY "artist"."id_artist";
 ALTER SEQUENCE "public"."genre_id_genre_seq" OWNED BY "genre"."id_genre";
