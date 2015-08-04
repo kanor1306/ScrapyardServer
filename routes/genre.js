@@ -19,6 +19,25 @@ module.exports = (function (genres_controller) {
                 }
             );
         },
+        //Handle the items list request
+        //Each element has the following fields:  id, name,id_genre_type
+        //It is sent in the response in JSON format.
+        //If it fails, return the corresponding error message.
+        listByType: function (req, res) {
+            console.log("Entering router genre.js: list")
+            var id_genre_type = req.params.id_genre_type;
+
+            genres_controller.listByType(id_genre_type).then(
+                function (controllerResponse) {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(controllerResponse);
+                },
+                function (err) {
+                    res.send(err.message);
+                }
+            );
+        },
 
         //Handles the request of the detail about a genre
         //The response has the following fields:  id, name,id_genre_type
@@ -44,7 +63,7 @@ module.exports = (function (genres_controller) {
         //In the response will be returned a 201 if it is created, and a JSON
         // with the id of the new genre if it is correctly created.
         //If not will return the corresponding error code.
-        add: function (req, res) {
+        create: function (req, res) {
             console.log("Entering router genre.js: create")
             var name = req.body.name;
             var id_genre_type = req.body.id_genre_type;
@@ -71,7 +90,7 @@ module.exports = (function (genres_controller) {
             var id_genre = req.body.id_genre
             var name = req.body.name;
             var id_genre_type = req.body.id_genre_type;
-            genres_controller.create(id_genre, name, id_genre_type).then(
+            genres_controller.update(req.body).then(
                 function (controllerResponse) {
                     res.statusCode = 202;
                     res.setHeader('Content-Type', 'application/json');
@@ -82,7 +101,7 @@ module.exports = (function (genres_controller) {
                 }
             );
         },
-        remove: function (req, res) {
+        destroy: function (req, res) {
             console.log("Entrando router genre.js: delete")
             var id_genre = req.params.id_genre;
             genres_controller.delete(id_genre).then(

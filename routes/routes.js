@@ -9,6 +9,7 @@
 exports.index = require('./index');
 
 //Router genre WS
-exports.album = require('./genre');
+exports.genre = require('./genre');
+exports.genre_type = require('./genre_type');
 
 
