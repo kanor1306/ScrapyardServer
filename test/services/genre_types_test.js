@@ -32,17 +32,28 @@ suite('Genre type Web Services', function () {
     });
     suite('- List genre_types', function () {
         test('Must return a list of genre_types', function (done) {
-            rp(testUtils.BASE_URL + "/genre_type/list").then(function (response) {
-                expect(test_genre_types_list.length).to.eql(response.body.length);
+            var options = {
+                uri: testUtils.BASE_URL + "/genreType/list",
+                method: 'GET',
+                json: true
+            }
+            rp(options).then(function (response) {
+                expect(test_genre_types_list.length).to.eql(response.length);
                 done();
             });
         });
     });
 
+
     suite('- Get genre_type  by id', function () {
+        var options = {
+            uri: testUtils.BASE_URL + "/genreType/detail/" + test_genre_type_1.id_genre_type,
+            method: 'GET',
+            json: true
+        }
         test('Must return a genre_type  object', function (done) {
-            rp(testUtils.BASE_URL + "/genre_type/byId/" + test_genre_type_1.id_genre_type).then(function (response) {
-                expect(test_genre_type_1.id_genre_type).to.eql(response.body.id_genre_type);
+            rp(options).then(function (response) {
+                expect(test_genre_type_1.id_genre_type).to.eql(response.id_genre_type);
                 done();
             });
         });
@@ -51,16 +62,14 @@ suite('Genre type Web Services', function () {
     suite('- Add genre_type', function () {
         test('must return the created genre_type type', function (done) {
             var options = {
-                uri: testUtils.BASE_URL + "/genre_type/create",
+                uri: testUtils.BASE_URL + "/genreType/create",
                 method: 'POST',
                 json: true,
-                body: {
-                    name : "test add genre type"
-                }
+                body: test_genre_type_1
             }
 
             rp(options).then(function (response) {
-                expect(response.body.name).to.exist;
+                expect(response.name).to.exist;
                 done();
             });
         });
@@ -71,14 +80,14 @@ suite('Genre type Web Services', function () {
         test('must return the updated genre_type type', function (done) {
             test_genre_type_1.name = "Test update genre_type;"
             var options = {
-                uri: testUtils.BASE_URL + "/genre_type/update",
+                uri: testUtils.BASE_URL + "/genreType/update",
                 method: 'PUT',
                 json: true,
                 body: test_genre_type_1
             }
 
             rp(options).then(function (response) {
-                expect(response.body.id_genre_type).to.eql(test_genre_type_1.id_genre_type);
+                expect(response.id_genre_type).to.eql(test_genre_type_1.id_genre_type);
                 done();
             });
 
@@ -89,14 +98,14 @@ suite('Genre type Web Services', function () {
     suite('- Delete genre_type', function () {
         test('must return the deleted genre_type type', function (done) {
             var options = {
-                uri: testUtils.BASE_URL + "/genre_type/destroy",
+                uri: testUtils.BASE_URL + "/genreType/destroy/" + test_genre_type_1.id_genre_type,
                 method: 'DELETE',
                 json: true,
                 body: test_genre_type_1
             }
 
             rp(options).then(function (response) {
-                expect(response.body.name).to.exist;
+                expect(response).to.exist;
                 done();
             });
 

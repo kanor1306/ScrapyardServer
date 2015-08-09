@@ -8,7 +8,7 @@ var Bookshelf = require('../my_modules/utils/bookshelf');
 module.exports = (function (Bookshelf) {
     return {
         list: function () {
-            return Bookshelf.collection('GenreType').forge().fetch();
+            return Bookshelf.collection('GenreTypes').forge().fetch();
         },
         detail: function (id_genre_type) {
             return Bookshelf.model('GenreType').forge({id_genre_type: id_genre_type}).fetch();
@@ -19,7 +19,7 @@ module.exports = (function (Bookshelf) {
         create : function(genre_type){
             return Bookshelf.model('GenreType').forge(genre_type).save();
         },
-        remove : function(id_genre_type){
+        destroy : function(id_genre_type){
             return Bookshelf.model('GenreType').forge({id_genre_type: id_genre_type}).destroy();
         }
     }

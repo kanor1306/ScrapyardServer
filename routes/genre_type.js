@@ -44,11 +44,11 @@ module.exports = (function (genre_types_controller) {
         //In the response will be returned a 201 if it is created, and a JSON
         // with the id of the new genre_type if it is correctly created.
         //If not will return the corresponding error code.
-        add: function (req, res) {
+        create: function (req, res) {
             console.log("Entering router genre_type.js: create")
             var name = req.body.name;
             var id_genre_type = req.body.id_genre_type;
-            genre_types_controller.create(name, id_genre_type).then(
+            genre_types_controller.create(id_genre_type, name).then(
                 function (controllerResponse) {
                     res.statusCode = 201;
                     res.setHeader('Content-Type', 'application/json');
@@ -68,10 +68,7 @@ module.exports = (function (genre_types_controller) {
         //If not will return the corresponding error code.
         update: function (req, res) {
             console.log("Entering router genre_type.js: update")
-            var id_genre_type = req.body.id_genre_type
-            var name = req.body.name;
-            var id_genre_type = req.body.id_genre_type;
-            genre_types_controller.create(id_genre_type, name, id_genre_type).then(
+            genre_types_controller.update(req.body).then(
                 function (controllerResponse) {
                     res.statusCode = 202;
                     res.setHeader('Content-Type', 'application/json');
@@ -82,12 +79,12 @@ module.exports = (function (genre_types_controller) {
                 }
             );
         },
-        remove: function (req, res) {
+        destroy: function (req, res) {
             console.log("Entrando router genre_type.js: delete")
             var id_genre_type = req.params.id_genre_type;
-            genre_types_controller.delete(id_genre_type).then(
+            genre_types_controller.destroy(id_genre_type).then(
                 function (controllerResponse) {
-                    es.statusCode = 204;
+                    res.statusCode = 204;
                     res.setHeader('Content-Type', 'application/json');
                     res.send(controllerResponse);
                 },
